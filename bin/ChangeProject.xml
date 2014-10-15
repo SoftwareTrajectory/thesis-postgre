@@ -4,21 +4,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.softwaretrajectory.persistence">
 
- <select id="getProjectById" resultType="com.softwaretrajectory.persistence.ChangeProject"
+ <select id="getProjectById" resultType="edu.hawaii.senin.postgre.persistence.ChangeProject"
   parameterType="Integer">
   SELECT * FROM change_project WHERE id = #{value}
  </select>
 
- <select id="getProjectByName" resultType="com.softwaretrajectory.persistence.ChangeProject"
+ <select id="getProjectByName" resultType="edu.hawaii.senin.postgre.persistence.ChangeProject"
   parameterType="String">
   SELECT * FROM change_project WHERE name = #{name}
  </select>
 
- <select id="getProjects" resultType="com.softwaretrajectory.persistence.ChangeProject">
+ <select id="getProjects" resultType="edu.hawaii.senin.postgre.persistence.ChangeProject">
   SELECT * FROM change_project ORDER BY name
  </select>
 
- <insert id="saveProject" parameterType="com.softwaretrajectory.persistence.ChangeProject"
+ <insert id="saveProject" parameterType="edu.hawaii.senin.postgre.persistence.ChangeProject"
   useGeneratedKeys="true" keyProperty="id">
   INSERT INTO
   change_project (name,

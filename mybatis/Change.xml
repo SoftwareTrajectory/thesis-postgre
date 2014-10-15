@@ -4,12 +4,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.softwaretrajectory.persistence">
 
- <select id="getChangeForId" resultType="com.softwaretrajectory.persistence.Change">
+ <select id="getChangeForId" resultType="edu.hawaii.senin.postgre.persistence.Change">
   SELECT * FROM `change`
   WHERE id=#{value}
  </select>
 
- <select id="getAuthorsForInterval" resultType="com.softwaretrajectory.persistence.ChangePeople"
+ <select id="getAuthorsForInterval" resultType="edu.hawaii.senin.postgre.persistence.ChangePeople"
   parameterType="HashMap">
   SELECT cp.* FROM change_people cp where cp.id IN
   (select distinct(c.author_id) from
@@ -17,23 +17,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   #{start,
   javaType=org.joda.time.LocalDateTime,
   jdbcType=TIMESTAMP,
-  typeHandler=com.softwaretrajectory.persistence.LocalDateTimeTimestampTypeHandler}
+  typeHandler=edu.hawaii.senin.postgre.persistence.LocalDateTimeTimestampTypeHandler}
   AND
   #{end,
   javaType=org.joda.time.LocalDateTime,
   jdbcType=TIMESTAMP,
-  typeHandler=com.softwaretrajectory.persistence.LocalDateTimeTimestampTypeHandler}
+  typeHandler=edu.hawaii.senin.postgre.persistence.LocalDateTimeTimestampTypeHandler}
   )
  </select>
 
 
- <select id="getChange" resultType="com.softwaretrajectory.persistence.Change" parameterType="HashMap">
+ <select id="getChange" resultType="edu.hawaii.senin.postgre.persistence.Change" parameterType="HashMap">
   SELECT * FROM `change`
   WHERE commit_hash=#{commit_hash}
   AND project_id = #{project_id}
  </select>
 
- <select id="getFirstChangeForAuthor" resultType="com.softwaretrajectory.persistence.Change"
+ <select id="getFirstChangeForAuthor" resultType="edu.hawaii.senin.postgre.persistence.Change"
   parameterType="HashMap">
   SELECT * FROM `change`
   WHERE author_id=#{author_id}
@@ -44,7 +44,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   ORDER BY author_date LIMIT 1
  </select>
 
- <select id="getLastChangeForAuthor" resultType="com.softwaretrajectory.persistence.Change"
+ <select id="getLastChangeForAuthor" resultType="edu.hawaii.senin.postgre.persistence.Change"
   parameterType="HashMap">
   SELECT * FROM `change`
   WHERE author_id=#{author_id}
@@ -55,14 +55,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   ORDER BY author_date DESC LIMIT 1
  </select>
 
- <select id="getFirstChangeForProject" resultType="com.softwaretrajectory.persistence.Change"
+ <select id="getFirstChangeForProject" resultType="edu.hawaii.senin.postgre.persistence.Change"
   parameterType="Integer">
   SELECT * FROM `change`
   WHERE project_id=#{value}
   ORDER BY author_date LIMIT 1
  </select>
 
- <select id="getLastChangeForProject" resultType="com.softwaretrajectory.persistence.Change"
+ <select id="getLastChangeForProject" resultType="edu.hawaii.senin.postgre.persistence.Change"
   parameterType="Integer">
   SELECT * FROM `change`
   WHERE project_id=#{value}
@@ -77,24 +77,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </if>
  </select>
 
- <select id="getChangesForAuthor" parameterType="HashMap" resultType="com.softwaretrajectory.persistence.Change">
+ <select id="getChangesForAuthor" parameterType="HashMap" resultType="edu.hawaii.senin.postgre.persistence.Change">
   SELECT * FROM `change`
   WHERE author_id=#{author_id} and
   author_date between
   #{start,
   javaType=org.joda.time.LocalDateTime,
   jdbcType=TIMESTAMP,
-  typeHandler=com.softwaretrajectory.persistence.LocalDateTimeTimestampTypeHandler}
+  typeHandler=edu.hawaii.senin.postgre.persistence.LocalDateTimeTimestampTypeHandler}
   AND
   #{end,
   javaType=org.joda.time.LocalDateTime,
   jdbcType=TIMESTAMP,
-  typeHandler=com.softwaretrajectory.persistence.LocalDateTimeTimestampTypeHandler}
+  typeHandler=edu.hawaii.senin.postgre.persistence.LocalDateTimeTimestampTypeHandler}
   order by
   author_date;
  </select>
 
- <select id="getChangesForProject" parameterType="Integer" resultType="com.softwaretrajectory.persistence.Change">
+ <select id="getChangesForProject" parameterType="Integer" resultType="edu.hawaii.senin.postgre.persistence.Change">
   SELECT * FROM
   `change`
   WHERE project_id=#{value}
@@ -115,7 +115,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  </select>
 
  <select id="getAllNullChangesForProject" parameterType="Integer"
-  resultType="com.softwaretrajectory.persistence.Change">
+  resultType="edu.hawaii.senin.postgre.persistence.Change">
   select distinct(ch.id) from `change` ch
   join change_target
   ct on
@@ -128,7 +128,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   renamed=null or copied=null);
  </select>
 
- <update id="updateChange" parameterType="com.softwaretrajectory.persistence.Change">
+ <update id="updateChange" parameterType="edu.hawaii.senin.postgre.persistence.Change">
   UPDATE `change`
   SET
   added_files=#{added_files},
@@ -143,7 +143,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  </update>
 
 
- <insert id="saveChange" parameterType="com.softwaretrajectory.persistence.Change"
+ <insert id="saveChange" parameterType="edu.hawaii.senin.postgre.persistence.Change"
   useGeneratedKeys="true" keyProperty="id">
   INSERT INTO `change`
   (project_id,
@@ -163,17 +163,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   #{utc_time,
   javaType=org.joda.time.LocalDateTime,
   jdbcType=DATE,
-  typeHandler=com.softwaretrajectory.persistence.LocalDateTimeTimestampTypeHandler},
+  typeHandler=edu.hawaii.senin.postgre.persistence.LocalDateTimeTimestampTypeHandler},
   #{author_id},
   #{author_date,
   javaType=org.joda.time.LocalDateTime,
   jdbcType=DATE,
-  typeHandler=com.softwaretrajectory.persistence.LocalDateTimeTimestampTypeHandler},
+  typeHandler=edu.hawaii.senin.postgre.persistence.LocalDateTimeTimestampTypeHandler},
   #{committer_id},
   #{committer_date,
   javaType=org.joda.time.LocalDateTime,
   jdbcType=DATE,
-  typeHandler=com.softwaretrajectory.persistence.LocalDateTimeTimestampTypeHandler},
+  typeHandler=edu.hawaii.senin.postgre.persistence.LocalDateTimeTimestampTypeHandler},
   #{subject},
   #{added_files}, #{edited_files},
   #{removed_files},#{renamed_files},#{copied_files},
@@ -182,7 +182,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   #{removed_lines})
  </insert>
 
- <insert id="replaceChange" parameterType="com.softwaretrajectory.persistence.Change"
+ <insert id="replaceChange" parameterType="edu.hawaii.senin.postgre.persistence.Change"
   useGeneratedKeys="true" keyProperty="id">
   REPLACE INTO `change`
   (project_id,
@@ -202,17 +202,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   #{utc_time,
   javaType=org.joda.time.LocalDateTime,
   jdbcType=TIMESTAMP,
-  typeHandler=com.softwaretrajectory.persistence.LocalDateTimeTimestampTypeHandler},
+  typeHandler=edu.hawaii.senin.postgre.persistence.LocalDateTimeTimestampTypeHandler},
   #{author_id},
   #{author_date,
   javaType=org.joda.time.LocalDateTime,
   jdbcType=TIMESTAMP,
-  typeHandler=com.softwaretrajectory.persistence.LocalDateTimeTimestampTypeHandler},
+  typeHandler=edu.hawaii.senin.postgre.persistence.LocalDateTimeTimestampTypeHandler},
   #{committer_id},
   #{committer_date,
   javaType=org.joda.time.LocalDateTime,
   jdbcType=TIMESTAMP,
-  typeHandler=com.softwaretrajectory.persistence.LocalDateTimeTimestampTypeHandler},
+  typeHandler=edu.hawaii.senin.postgre.persistence.LocalDateTimeTimestampTypeHandler},
   #{subject},
   #{added_files}, #{edited_files},
   #{removed_files},#{renamed_files},#{copied_files},
@@ -243,11 +243,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   BETWEEN #{start,
   javaType=org.joda.time.LocalDateTime,
   jdbcType=TIMESTAMP,
-  typeHandler=com.softwaretrajectory.persistence.LocalDateTimeTimestampTypeHandler}
+  typeHandler=edu.hawaii.senin.postgre.persistence.LocalDateTimeTimestampTypeHandler}
   AND #{end,
   javaType=org.joda.time.LocalDateTime,
   jdbcType=TIMESTAMP,
-  typeHandler=com.softwaretrajectory.persistence.LocalDateTimeTimestampTypeHandler}
+  typeHandler=edu.hawaii.senin.postgre.persistence.LocalDateTimeTimestampTypeHandler}
   AND
   date_format(c.author_date,'%H') BETWEEN #{start_hour} and #{end_hour}
   GROUP BY
@@ -278,11 +278,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   BETWEEN #{start,
   javaType=org.joda.time.LocalDateTime,
   jdbcType=DATE,
-  typeHandler=com.softwaretrajectory.persistence.LocalDateTimeDateTypeHandler}
+  typeHandler=edu.hawaii.senin.postgre.persistence.LocalDateTimeDateTypeHandler}
   AND #{end,
   javaType=org.joda.time.LocalDateTime,
   jdbcType=DATE,
-  typeHandler=com.softwaretrajectory.persistence.LocalDateTimeDateTypeHandler}
+  typeHandler=edu.hawaii.senin.postgre.persistence.LocalDateTimeDateTypeHandler}
   GROUP by
   date_format(c.author_date,"%H");
  </select>
@@ -311,11 +311,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   BETWEEN #{start,
   javaType=org.joda.time.LocalDateTime,
   jdbcType=DATE,
-  typeHandler=com.softwaretrajectory.persistence.LocalDateTimeDateTypeHandler}
+  typeHandler=edu.hawaii.senin.postgre.persistence.LocalDateTimeDateTypeHandler}
   AND #{end,
   javaType=org.joda.time.LocalDateTime,
   jdbcType=DATE,
-  typeHandler=com.softwaretrajectory.persistence.LocalDateTimeDateTypeHandler}
+  typeHandler=edu.hawaii.senin.postgre.persistence.LocalDateTimeDateTypeHandler}
   GROUP by
   DAYOFWEEK(c.author_date);
  </select>
@@ -327,11 +327,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   BETWEEN #{start,
   javaType=org.joda.time.LocalDateTime,
   jdbcType=DATE,
-  typeHandler=com.softwaretrajectory.persistence.LocalDateTimeDateTypeHandler}
+  typeHandler=edu.hawaii.senin.postgre.persistence.LocalDateTimeDateTypeHandler}
   AND #{end,
   javaType=org.joda.time.LocalDateTime,
   jdbcType=DATE,
-  typeHandler=com.softwaretrajectory.persistence.LocalDateTimeDateTypeHandler}
+  typeHandler=edu.hawaii.senin.postgre.persistence.LocalDateTimeDateTypeHandler}
   group by `date` order
   by `date`
  </select>
