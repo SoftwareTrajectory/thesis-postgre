@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TimeZone;
@@ -19,7 +18,6 @@ import edu.hawaii.jmotif.timeseries.TSException;
 import edu.hawaii.jmotif.timeseries.TSUtils;
 import edu.hawaii.senin.postgre.db.PostgreDB;
 import edu.hawaii.senin.postgre.db.PostgreDBManager;
-import edu.hawaii.senin.postgre.persistence.ChangePeople;
 import edu.hawaii.senin.postgre.persistence.ChangeProject;
 
 /**

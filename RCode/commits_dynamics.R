@@ -63,7 +63,7 @@ total_commits_smooth <- ggplot(res, aes(week, smooth)) + geom_line() + theme_bw(
   scale_x_datetime("Year", breaks=as.POSIXct(paste(c(1997:2013),"-01-01",sep="")),
   labels=c(1997:2013)) + stat_smooth() +
   scale_y_continuous("Commits") + 
-  ggtitle("Weekly commits dynamics (and the smoothed curve) in PostgreSQL")
+  ggtitle("Weekly commits dynamics (and the mean) in PostgreSQL")
 total_commits_smooth 
 
 grid.arrange(total_commits_smooth, p_commits)
@@ -130,9 +130,17 @@ commit_fest_churn  <- ggplot(res, aes(week, smooth)) +  theme_bw() +
   scale_x_datetime("Year", breaks=as.POSIXct(paste(c(1997:2013),"-01-01",sep="")),
                    labels=c(1997:2013), limits=c(as.POSIXct("2009-01-01"),as.POSIXct("2014-01-01"))) + 
   scale_y_log10("Churn, LOC") + 
-  ggtitle("Weekly churn smoothed curve with CommitFest events, PostgreSQL")
+  ggtitle("Weekly churn smoothed curve with CommitFest events highlighted, PostgreSQL")
 commit_fest_churn
 
+print(arrangeGrob(total_commits_smooth, p_commits, commit_fest_churn, p_weekly_churns, ncol=1))
 
-ggsave(arrangeGrob(total_commits_smooth, p_commits, ncol=1), file="figures/postgre_commits_dynamics.eps", 
-       width=10, height=6)
+ggsave(arrangeGrob(total_commits_smooth, p_commits, commit_fest_churn, p_weekly_churns, ncol=1), 
+       file="figures/postgre_commits_dynamics.eps", width=10, height=10)
+
+Cairo(width = 900, height = 900, 
+      file="figures/postgre_commits_dynamics", 
+      type="ps", pointsize=12, 
+      bg = "transparent", canvas = "white", units = "px", dpi = 82)
+print(arrangeGrob(total_commits_smooth, p_commits, commit_fest_churn, p_weekly_churns, ncol=1))
+dev.off()
