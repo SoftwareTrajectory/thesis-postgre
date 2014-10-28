@@ -26,7 +26,7 @@ import edu.hawaii.senin.postgre.persistence.ChangeProject;
  * @author psenin
  * 
  */
-public class Step01PrintReleaseSeries {
+public class Step01PrintCFSeries {
 
   // this is the project name
   //
@@ -48,7 +48,7 @@ public class Step01PrintReleaseSeries {
   private static Level LOGGING_LEVEL = Level.INFO;
 
   static {
-    consoleLogger = (Logger) LoggerFactory.getLogger(Step01PrintReleaseSeries.class);
+    consoleLogger = (Logger) LoggerFactory.getLogger(Step01PrintCFSeries.class);
     consoleLogger.setLevel(LOGGING_LEVEL);
   }
 

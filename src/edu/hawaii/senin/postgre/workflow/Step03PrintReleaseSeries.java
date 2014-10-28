@@ -47,7 +47,7 @@ public class Step03PrintReleaseSeries {
   private static Level LOGGING_LEVEL = Level.INFO;
 
   static {
-    consoleLogger = (Logger) LoggerFactory.getLogger(Step01PrintReleaseSeries.class);
+    consoleLogger = (Logger) LoggerFactory.getLogger(Step03PrintReleaseSeries.class);
     consoleLogger.setLevel(LOGGING_LEVEL);
   }
 

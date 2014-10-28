@@ -56,7 +56,7 @@ public class Step04PostgrePatternsHunter extends UCRGenericClassifier {
 
   static {
     Locale.setDefault(Locale.US);
-    consoleLogger = (Logger) LoggerFactory.getLogger(Step01PrintReleaseSeries.class);
+    consoleLogger = (Logger) LoggerFactory.getLogger(Step01PrintCFSeries.class);
     consoleLogger.setLevel(LOGGING_LEVEL);
   }
 
