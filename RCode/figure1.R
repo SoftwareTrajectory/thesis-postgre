@@ -13,6 +13,12 @@ require(Cairo)
 require(splines)
 require(MASS)
 library(zoo)
+
+releases=read.table("../resources/releases.csv",as.is=T,sep=",")
+names(releases)=c("id","date")
+str(releases)
+releases$date=as.POSIXct(releases$date)
+
 #
 # connect to DB
 # 
@@ -34,7 +40,7 @@ total_commits_smooth <- ggplot(res, aes(week, smooth)) + geom_line() + theme_bw(
   labels=c(1997:2013)) + stat_smooth() +
   scale_y_continuous("Commits") + 
   ggtitle("Weekly commits dynamics (and the mean) in PostgreSQL")
-total_commits_smooth
+total_commits_smooth = total_commits_smooth + geom_vline(xintercept=as.numeric(releases$date), linetype=4) + theme_bw()
 
 #
 # CHURN
@@ -68,7 +74,7 @@ commit_fest_churn  <- ggplot(res, aes(week, smooth)) +  theme_bw() +
                    labels=c(1997:2013), limits=c(as.POSIXct("2009-01-01"),as.POSIXct("2014-01-01"))) + 
   scale_y_log10("Churn, LOC") + 
   ggtitle("Weekly churn smoothed curve with CommitFest events highlighted, PostgreSQL")
-commit_fest_churn
+commit_fest_churn = commit_fest_churn  + geom_vline(xintercept=as.numeric(releases$date), linetype=4) + theme_bw()
 
 #
 # ADDED LINES
@@ -89,8 +95,7 @@ commit_fest_added  <- ggplot(res, aes(week, smooth)) +  theme_bw() +
     labels=c(1997:2013), limits=c(as.POSIXct("2009-01-01"),as.POSIXct("2014-01-01"))) + 
   scale_y_log10("Added LOC") + 
   ggtitle("Weekly added LOC smoothed curve with CommitFest events highlighted, PostgreSQL")
-commit_fest_added
-
+commit_fest_added = commit_fest_added + geom_vline(xintercept=as.numeric(releases$date), linetype=4) + theme_bw()
 
 
 print(arrangeGrob(total_commits_smooth, commit_fest_churn, commit_fest_added), ncol=1)
@@ -98,7 +103,7 @@ print(arrangeGrob(total_commits_smooth, commit_fest_churn, commit_fest_added), n
 ggsave(arrangeGrob(total_commits_smooth, commit_fest_churn, commit_fest_added, ncol=1), 
        file="figures/postgre_commits_dynamics.eps", width=10, height=10)
 
-Cairo(width = 900, height = 900, 
+Cairo(width = 900, height = 700, 
       file="figures/postgre_commits_dynamics", 
       type="ps", pointsize=12, 
       bg = "transparent", canvas = "white", units = "px", dpi = 82)
