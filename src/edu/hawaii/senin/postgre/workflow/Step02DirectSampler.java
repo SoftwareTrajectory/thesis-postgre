@@ -34,11 +34,11 @@ public class Step02DirectSampler extends UCRGenericClassifier {
 
   // num of threads to use
   //
-  private static final int THREADS_NUM = 3;
+  private static final int THREADS_NUM = 1;
 
   // data
   //
-  private static final String TRAINING_DATA = "results/cf_edited_lines.csv";
+  private static final String TRAINING_DATA = "results/cf_edited_files.csv";
 
   // output prefix
   //
@@ -57,7 +57,7 @@ public class Step02DirectSampler extends UCRGenericClassifier {
 
   private static final int HOLD_OUT_NUM = 1;
 
-  private static final int MAX_ITERATIONS = 16;
+  private static final int MAX_ITERATIONS = 18;
 
   private static List<String> globalResults = new ArrayList<String>();
 
