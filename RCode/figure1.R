@@ -59,7 +59,7 @@ total_churn_smooth  <- ggplot(res, aes(week, smooth)) + theme_bw() +
                    labels=c(1997:2013)) + 
   scale_y_log10("Churn, LOC") + 
   ggtitle("Weekly churn dynamics (and the smoothed curve), PostgreSQL")
-total_churn_smooth 
+total_churn_smooth=  total_churn_smooth+ geom_vline(xintercept=as.numeric(releases$date), linetype=4) + theme_bw()
 
 commitfest=read.csv("../resources/commit_fest.csv",header=F)
 names(commitfest) = c("name","start","end")
